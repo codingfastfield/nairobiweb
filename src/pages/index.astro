@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import { services } from '../data/services';
+import { areas } from '../data/areas';
+import { faqs } from '../data/faqs';
+import { SITE, ksh, waLink } from '../data/site';
+import { faqSchema } from '../lib';
+const max = services[services.length - 1].price;
+const catalog = { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Web development packages in Nairobi',
+  itemListElement: services.map((s, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'Service', name: s.name, url: `${SITE.url}/services/${s.slug}`, areaServed: 'Nairobi, Kenya', provider: { '@id': SITE.url + '/#org' }, offers: { '@type': 'Offer', price: s.price, priceCurrency: 'KES' } } })) };
+---
+<Base title="Nairobi Web Developers | Reliable, Affordable Websites from KSh 9,999" description="Top-rated, professional web developers in Nairobi. Genuine fixed prices from KSh 9,999 to KSh 120,000. Landing pages, premium sites, M-Pesa stores and apps. Call +254700009945." schema={[faqSchema(faqs.slice(0, 6)), catalog]}>
+<section class="hero"><div class="wrap grid">
+  <div>
+    <h1>Reliable web developers in Nairobi. Prices published, not hidden.</h1>
+    <p class="lead">Professional, affordable websites and apps for Kenyan businesses. Pick a fixed-price package from {ksh(9999)} to {ksh(120000)}, pay with M-Pesa, and own everything we build.</p>
+    <div class="cta"><a class="btn wa" href={waLink('Hi, I would like a quote for a website.')}>Chat on WhatsApp</a><a class="btn ghost" href={`tel:${SITE.phone}`}>Call {SITE.phoneDisplay}</a></div>
+  </div>
+  <div class="ladder" aria-label="Our price ladder">
+    {services.map((s, i) => <a href={`/services/${s.slug}`} style={`--i:${i};--w:${Math.max(8, Math.round((s.price / max) * 100))}%`}><b>{s.name}</b><span>{s.from ? 'from ' : ''}{ksh(s.price)}</span><i class="bar"></i></a>)}
+  </div>
+</div></section>
+
+<section class="soft"><div class="wrap">
+  <h2 class="reveal">Six packages. One honest price for each.</h2>
+  <div class="cards">
+    {services.map((s) => <a class="card reveal" href={`/services/${s.slug}`}><h3>{s.name}</h3><p class="mute">{s.short}</p><div class="price">{s.from ? 'from ' : ''}{ksh(s.price)}</div><span class="mute">Delivered in {s.time}</span></a>)}
+  </div>
+</div></section>
+
+<section><div class="wrap two">
+  <div class="reveal"><h2>Why Nairobi businesses call us a genuine, premium-quality team</h2>
+    <p class="mute">Search for a web developer in Nairobi and you will find hundreds of promises. We make ours checkable: a written scope, a fixed price and a documented handover on every project.</p></div>
+  <ul class="ticks reveal">
+    <li><b>Reliable:</b> milestone payments and weekly progress updates.</li>
+    <li><b>Affordable:</b> pricing that starts at {ksh(9999)}, with no surprise add-ons.</li>
+    <li><b>Professional:</b> fast, accessible, mobile-first builds that score well on Core Web Vitals.</li>
+    <li><b>Premium:</b> custom design and motion when your brand needs to stand out.</li>
+    <li><b>Genuine:</b> you own the code, domain and logins from day one of handover.</li>
+    <li><b>Local:</b> M-Pesa, Swahili-friendly copy and Nairobi search intent built in.</li>
+  </ul>
+</div></section>
+
+<section class="soft"><div class="wrap">
+  <h2 class="reveal">How a project runs</h2>
+  <div class="cards">
+    {[['Talk', 'A free 20-minute call or WhatsApp chat to understand your goals and confirm the right package.'], ['Scope', 'You receive a written scope, timeline and fixed price before you pay anything.'], ['Build', 'We design and build in short steps, sharing a live preview link so you can react early.'], ['Launch', 'We launch, set up analytics and Search Console, hand over all logins and train your team.']].map(([t, d]) => <div class="card reveal"><h3>{t}</h3><p class="mute">{d}</p></div>)}
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2 class="reveal">Serving every part of Nairobi</h2>
+  <p class="mute reveal" style="margin-bottom:1.5rem">We work with businesses across the city and meet in person or online.</p>
+  <div class="tags reveal">{areas.map((a) => <a href={`/areas/${a.slug}`}>{a.name}</a>)}</div>
+</div></section>
+
+<section class="soft"><div class="wrap two">
+  <div class="reveal"><h2>Questions we hear on every call</h2><p class="mute">These come straight from conversations with Nairobi business owners. <a href="/faq">See all answers</a>.</p></div>
+  <div class="reveal"><Faq items={faqs.slice(0, 6)} /></div>
+</div></section>
+<CtaBand />
+</Base>

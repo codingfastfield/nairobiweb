@@ -1,0 +1,18 @@
+# Nairobi Web Developers
+
+> Professional, affordable web development studio in Nairobi, Kenya. Fixed, published prices from KSh 9,999 (landing page) to KSh 120,000 (enterprise app). Contact and WhatsApp: +254700009945.
+
+## Pricing (KES, fixed scope)
+- Landing Page: KSh 9,999 — https://nairobiwebdevelopers.co.ke/services/landing-page
+- Business Website: KSh 19,999 — https://nairobiwebdevelopers.co.ke/services/business-website
+- Premium Brand Website: KSh 34,999 — https://nairobiwebdevelopers.co.ke/services/premium-brand-website
+- E-commerce Store with M-Pesa: KSh 54,999 — https://nairobiwebdevelopers.co.ke/services/ecommerce-store
+- Custom Web App: KSh 84,999 — https://nairobiwebdevelopers.co.ke/services/custom-web-app
+- Enterprise App: from KSh 120,000 — https://nairobiwebdevelopers.co.ke/services/enterprise-app
+
+## Key pages
+- Pricing: https://nairobiwebdevelopers.co.ke/pricing
+- FAQ: https://nairobiwebdevelopers.co.ke/faq
+- Policies (payment, ownership, support): https://nairobiwebdevelopers.co.ke/policies
+- Book a call: https://nairobiwebdevelopers.co.ke/book
+- Service areas across Nairobi: https://nairobiwebdevelopers.co.ke/areas/westlands

@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Faq from '../../components/Faq.astro';
+import { services } from '../../data/services';
+import { areas } from '../../data/areas';
+import { SITE, ksh, waLink } from '../../data/site';
+import { faqSchema, crumbSchema } from '../../lib';
+export function getStaticPaths() { return services.map((s) => ({ params: { slug: s.slug }, props: { s } })); }
+const { s } = Astro.props;
+const others = services.filter((x) => x.slug !== s.slug);
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: s.name, description: s.description, url: `${SITE.url}/services/${s.slug}`, serviceType: 'Web development', areaServed: { '@type': 'City', name: 'Nairobi' }, provider: { '@id': SITE.url + '/#org' }, offers: { '@type': 'Offer', price: s.price, priceCurrency: 'KES', availability: 'https://schema.org/InStock' } },
+  faqSchema(s.faqs), crumbSchema([['Home', '/'], ['Pricing', '/pricing'], [s.name, `/services/${s.slug}`]]),
+];
+---
+<Base title={s.title} description={s.description} schema={schema}>
+<div class="wrap crumbs"><a href="/">Home</a> / <a href="/pricing">Pricing</a> / {s.name}</div>
+<div class="wrap pagehead"><h1>{s.name} in Nairobi</h1><p>{s.short}</p>
+  <div class="price" style="margin:1.5rem 0">{s.from ? 'from ' : ''}{ksh(s.price)} <span class="mute" style="font:400 1rem 'Instrument Sans'">· delivered in {s.time}</span></div>
+  <div class="cta"><a class="btn wa" href={waLink(`Hi, I'm interested in the ${s.name} (${ksh(s.price)}).`)}>WhatsApp about this</a><a class="btn ghost" href={`tel:${SITE.phone}`}>Call {SITE.phoneDisplay}</a></div></div>
+<section><div class="wrap two">
+  <div class="reveal"><h2>What you get</h2><ul class="ticks">{s.includes.map((i) => <li>{i}</li>)}</ul></div>
+  <div class="reveal"><h2>Not included</h2><ul class="ticks x">{s.notIncluded.map((i) => <li>{i}</li>)}</ul><p class="mute" style="margin-top:1rem">Anything outside this list is quoted in writing first, so the price you agree is the price you pay.</p></div>
+</div></section>
+<section class="soft"><div class="wrap two">
+  <div class="reveal"><h2>How this package works</h2>{s.about.map((p) => <p style="margin-bottom:1rem">{p}</p>)}</div>
+  <div class="reveal"><h2>Who it is for</h2><ul class="ticks">{s.who.map((i) => <li>{i}</li>)}</ul></div>
+</div></section>
+<section><div class="wrap two">
+  <div class="reveal"><h2>Questions about {s.name.toLowerCase()}</h2><p class="mute">Short answers to what clients ask us most.</p></div>
+  <div class="reveal"><Faq items={s.faqs} /></div>
+</div></section>
+<section class="soft"><div class="wrap">
+  <h2 class="reveal">Available across Nairobi</h2>
+  <div class="tags reveal">{areas.map((a) => <a href={`/areas/${a.slug}`}>{s.name} in {a.name}</a>)}</div>
+  <h2 style="margin-top:3rem" class="reveal">Compare other packages</h2>
+  <div class="cards">{others.map((o) => <a class="card reveal" href={`/services/${o.slug}`}><h3>{o.name}</h3><div class="price">{o.from ? 'from ' : ''}{ksh(o.price)}</div><span class="mute">{o.short}</span></a>)}</div>
+</div></section>
+<CtaBand />
+</Base>

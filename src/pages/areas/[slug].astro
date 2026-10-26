@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Faq from '../../components/Faq.astro';
+import { areas } from '../../data/areas';
+import { services } from '../../data/services';
+import { SITE, ksh, waLink } from '../../data/site';
+import { faqSchema, crumbSchema } from '../../lib';
+export function getStaticPaths() { return areas.map((a) => ({ params: { slug: a.slug }, props: { a } })); }
+const { a } = Astro.props;
+const pick = services.slice(0, 4);
+const local = [
+  { q: `How much does a website cost in ${a.name}?`, a: `Prices are the same for every part of Nairobi: ${ksh(9999)} for a landing page, ${ksh(19999)} for a business website and ${ksh(54999)} for an M-Pesa online store. There are no travel fees for meetings in ${a.name}.` },
+  { q: `Can you meet me in ${a.name}?`, a: `Yes. We can meet near ${a.landmark} or hold the kickoff over video or WhatsApp, whichever is faster for you.` },
+  { q: `Which package suits ${a.businesses[0]} in ${a.name}?`, a: `${a.angle} Book a free call and we will recommend the most affordable package that meets your goal.` },
+];
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: `Web development in ${a.name}, Nairobi`, url: `${SITE.url}/areas/${a.slug}`, areaServed: { '@type': 'Place', name: `${a.name}, Nairobi` }, provider: { '@id': SITE.url + '/#org' } },
+  faqSchema(local), crumbSchema([['Home', '/'], [a.name, `/areas/${a.slug}`]]),
+];
+---
+<Base title={`Web Developers in ${a.name}, Nairobi | Affordable & Professional from KSh 9,999`} description={`Reliable, top-rated web developers serving ${a.name}, Nairobi. Fixed prices from KSh 9,999 for ${a.businesses.slice(0, 2).join(' and ')}. Call or WhatsApp +254700009945.`} schema={schema}>
+<div class="wrap crumbs"><a href="/">Home</a> / Areas / {a.name}</div>
+<div class="wrap pagehead"><h1>Web developers in {a.name}, Nairobi</h1><p>{a.blurb} We build fast, professional websites and apps for {a.businesses.join(', ')} and more.</p>
+<div class="cta" style="margin-top:1.5rem"><a class="btn wa" href={waLink(`Hi, I'm in ${a.name} and need a website.`)}>WhatsApp from {a.name}</a><a class="btn ghost" href={`tel:${SITE.phone}`}>Call {SITE.phoneDisplay}</a></div></div>
+<section><div class="wrap two">
+  <div class="reveal"><h2>What works for businesses in {a.name}</h2><p style="margin-bottom:1rem">{a.angle}</p><p>Customers around {a.landmark} search on their phones, often with a location in the query. We set up local SEO, a Google Map embed, click-to-call and WhatsApp buttons so they can reach you in one tap.</p></div>
+  <div class="reveal"><h2>Typical clients here</h2><ul class="ticks">{a.businesses.map((b) => <li>{b[0].toUpperCase() + b.slice(1)}</li>)}</ul></div>
+</div></section>
+<section class="soft"><div class="wrap"><h2 class="reveal">Recommended packages for {a.name}</h2>
+  <div class="cards">{pick.map((p) => <a class="card reveal" href={`/services/${p.slug}`}><h3>{p.name}</h3><div class="price">{ksh(p.price)}</div><span class="mute">{p.short}</span></a>)}</div></div></section>
+<section><div class="wrap two"><div class="reveal"><h2>{a.name} questions</h2></div><div class="reveal"><Faq items={local} /></div></div></section>
+<section class="soft"><div class="wrap"><h2 class="reveal">Other areas we serve</h2><div class="tags reveal">{areas.filter((x) => x.slug !== a.slug).map((x) => <a href={`/areas/${x.slug}`}>{x.name}</a>)}</div></div></section>
+<CtaBand />
+</Base>

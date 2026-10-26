@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nairobiwebdevelopers.co.ke/sitemap-index.xml

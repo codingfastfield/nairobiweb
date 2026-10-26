@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { services } from '../data/services';
+import { SITE } from '../data/site';
+---
+<Base title="Book a Free Call with a Nairobi Web Developer" description="Book a free 20-minute call or WhatsApp consultation. Pick a service, date and time and get a fixed quote from a reliable Nairobi web developer." schema={[]}>
+<div class="wrap pagehead"><h1>Book a free 20-minute call</h1><p>Choose a time and we will confirm on WhatsApp. Prefer to talk now? Call <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a>.</p></div>
+<section><div class="wrap two">
+<form class="book" id="bookform">
+  <label>Your name<input name="name" required autocomplete="name" /></label>
+  <label>Service<select name="service">{services.map((s) => <option>{s.name}</option>)}</select></label>
+  <label>Preferred date<input type="date" name="date" required /></label>
+  <label>Preferred time<select name="time"><option>9:00 AM</option><option>11:00 AM</option><option>2:00 PM</option><option>4:00 PM</option></select></label>
+  <label>Anything we should know?<textarea name="note" rows="3"></textarea></label>
+  <button class="btn wa" type="submit">Confirm on WhatsApp</button>
+</form>
+<div><h2>What happens next</h2><ul class="ticks"><li>Your request opens in WhatsApp with all details filled in.</li><li>We confirm the slot within working hours (Mon–Sat, 8 AM – 6 PM EAT).</li><li>On the call we agree scope and send a fixed written quote.</li></ul></div>
+</div></section>
+<script define:vars={{ num: '254700009945' }}>
+  document.addEventListener('astro:page-load', () => {
+    const f = document.getElementById('bookform'); if (!f) return;
+    f.addEventListener('submit', (e) => { e.preventDefault(); const d = Object.fromEntries(new FormData(f));
+      const msg = `Hi, I'd like to book a call.\nName: ${d.name}\nService: ${d.service}\nDate: ${d.date}\nTime: ${d.time}\nNotes: ${d.note || '-'}`;
+      window.location.href = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`; });
+  });
+</script>
+</Base>

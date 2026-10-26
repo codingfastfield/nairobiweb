@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { services } from '../data/services';
+import { ksh } from '../data/site';
+import { crumbSchema } from '../lib';
+---
+<Base title="Website Development Prices in Nairobi, Kenya (2026) | KSh 9,999 – 120,000" description="Transparent web development pricing in Nairobi: landing page KSh 9,999, business website KSh 19,999, premium KSh 34,999, e-commerce KSh 54,999, apps from KSh 84,999." schema={[crumbSchema([['Home', '/'], ['Pricing', '/pricing']])]}>
+<div class="wrap pagehead"><h1>Web development pricing in Nairobi</h1>
+<p>Every package has a fixed scope and a published price in Kenyan shillings. Compare them side by side, then pick the one that fits your stage of growth.</p></div>
+<section><div class="wrap">
+<div class="tw reveal"><table>
+<thead><tr><th>Package</th><th>Price</th><th>Timeline</th><th>Best for</th><th>Free support</th></tr></thead>
+<tbody>{services.map((s) => <tr><td><a href={`/services/${s.slug}`}><b>{s.name}</b></a></td><td><b>{s.from ? 'from ' : ''}{ksh(s.price)}</b></td><td>{s.time}</td><td>{s.who[0]}</td><td>{s.includes[s.includes.length - 1].replace(' of free support', '').replace(' of free fixes after launch', '').replace(' of priority support', '')}</td></tr>)}</tbody>
+</table></div>
+<h2 style="margin-top:3.5rem" class="reveal">What affects the final price</h2>
+<div class="two reveal"><div><p>The package price is the final price for the listed scope. It changes only if you add pages, features or integrations, and we quote those in writing before any work begins.</p><p style="margin-top:1rem">Domain names (.co.ke, .com) and hosting are billed by the provider and typically cost a few thousand shillings per year. We help you register them in your own name.</p></div>
+<div><p>Payment is usually 50% to start and 50% on delivery, by M-Pesa, bank transfer or card. Enterprise projects use milestone payments tied to working software.</p><p style="margin-top:1rem">Not sure which tier? <a href="/book">Book a free call</a> and we will recommend the most affordable option that still meets your goal.</p></div></div>
+</div></section>
+<CtaBand text="Get a fixed written quote within one working day." />
+</Base>

@@ -1,0 +1,8 @@
+---
+import { SITE, waLink } from '../data/site';
+const { text = 'Tell us what you need and get a fixed quote today.' } = Astro.props;
+---
+<section><div class="wrap"><div class="cta-band reveal">
+  <div><h2 style="margin:0 0 .4rem">Ready to start?</h2><p style="opacity:.8">{text}</p></div>
+  <div class="cta"><a class="btn wa" href={waLink('Hi, I would like a quote for a website.')}>WhatsApp us</a><a class="btn" href={`tel:${SITE.phone}`}>Call {SITE.phoneDisplay}</a></div>
+</div></div></section>

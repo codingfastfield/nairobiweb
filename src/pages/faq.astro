@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import { faqs } from '../data/faqs';
+import { services } from '../data/services';
+import { faqSchema, crumbSchema } from '../lib';
+const all = [...faqs, ...services.flatMap((s) => s.faqs)];
+---
+<Base title="Web Development FAQ Nairobi: Prices, Timelines, M-Pesa & Ownership" description="Straight answers about web development in Nairobi: cost, payment, timelines, M-Pesa integration, SEO, ownership and support from a reliable local team." schema={[faqSchema(all), crumbSchema([['Home', '/'], ['FAQ', '/faq']])]}>
+<div class="wrap pagehead"><h1>Frequently asked questions</h1><p>Real questions from Nairobi business owners, answered plainly.</p></div>
+<section><div class="wrap" style="max-width:820px">
+  <h2>General</h2><Faq items={faqs} />
+  {services.map((s) => <><h2 style="margin-top:3rem">{s.name}</h2><Faq items={s.faqs} /></>)}
+</div></section>
+<CtaBand text="Still have a question? Ask us directly." />
+</Base>
